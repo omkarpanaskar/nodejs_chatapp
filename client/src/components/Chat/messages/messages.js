@@ -1,10 +1,25 @@
 import React from 'react'
-
+import './messages.css';
 const messages = ({message:{name,user_id,text},current_uid}) => {
+    let isCurrentUser = false;
+    if (user_id === current_uid) {
+        isCurrentUser = true;
+    }
     return (
-        <div>
-            {name}:{text}
-        </div>
+        isCurrentUser?(<div className="row right-align">
+            <div className="col s12 m8 16 right">
+            <p className="sentbyme">
+            {name}: {text}
+            </p>
+            </div>
+        </div>):(<div className="row left-align">
+            <div className="col s12 m8 16 right">
+            <p className="opponent">
+            {name}: {text}
+            </p>
+            </div>
+        </div>)
+        
     )
 }
 

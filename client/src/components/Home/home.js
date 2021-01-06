@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { UserContext } from '../../UserContext';
 import React, { useContext,useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import RoomList from './RoomList';
 import io from 'socket.io-client';
 let socket;
 const home = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [room, setRoom] = useState('')
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -43,24 +43,8 @@ const home = () => {
         console.log(room)
         setRoom('');
     }
-    
-    const setAsOmkar = () => {
-        const omkar = {
-            name: 'omkar',
-            email: "omkar@gmail.com",
-            password: "omkar1234",
-            id: '123'
-        }
-        setUser(omkar)
-    }
-    const setAsRushi = () => {
-        const rushi = {
-            name: 'rushi',
-            email: 'rushi@gmail.com',
-            password: 'rushi1234',
-            id: '12'
-        }
-        setUser(rushi)
+    if(!user) {
+        return <Redirect to='/login'/>
     }
     return (
         <>
@@ -81,19 +65,12 @@ const home = () => {
                                         <button className="btn">Create Room</button>
                                 </form>
                             </div>
-                            <div className="card-action">
-                                <a href="#" onClick={setAsOmkar}>set as Omkar</a>
-                                <a href="#" onClick={setAsRushi}>set as Rushi</a>
-                            </div>
                         </div>
                     </div>
                     <div className="col s6 m5 offset-1">
                         <RoomList rooms={rooms}/>
                     </div>
                 </div>
-                <Link to={'/chat'}>
-                    <button>Goto chat</button>
-                </Link>
             </div>
         </>
     )
